@@ -44,19 +44,21 @@ active
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="" method="post" enctype="multipart/form-data">
+            <form role="form" action="{{route('admin.blog.update', $blog->id)}}" method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              {{ method_field('PATCH') }}
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputFile">Input Gambar</label>
-                  <input type="file" name="gambar" id="exampleInputFile" required>
+                  <input type="file" name="gambar" id="exampleInputFile">
                 </div>
                 <div class="form-group">
                   <label>Judul</label>
-                  <input type="text" name="judul" class="form-control" placeholder="Nama produk" required>
+                  <input type="text" name="judul" class="form-control" placeholder="Judul blog" value="{{$blog->judul}}" required>
                 </div>
                 <div class="form-group">
                   <label>Konten</label>
-                  <textarea name="konten" class="form-control" rows="8" cols="80" placeholder="Masukkan keterangan produk disini..." required></textarea>
+                  <textarea name="konten" class="form-control" rows="8" cols="80" placeholder="Masukkan konten produk disini..." required>{{$blog->konten}}</textarea>
                 </div>
               </div>
               <!-- /.box-body -->

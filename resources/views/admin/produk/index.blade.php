@@ -59,7 +59,8 @@ active
                     <h4 class="modal-title">Tambah Kategori Produk</h4>
                   </div>
                   <div class="modal-body">
-                    <form class="" action="index.html" method="post">
+                    <form class="" action="{{route('admin.produk.kategori')}}" method="post">
+                      @csrf
                       <div class="form-group">
                         <label>Kategori Produk</label>
                         <input type="text" name="kategori" class="form-control" placeholder="Kategori Produk" required>
@@ -68,6 +69,34 @@ active
                         <button class="btn btn-default" type="submit" name="button">Tambah</button>
                       </div>
                     </form>
+
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Kategori</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @php
+                          $no = 1;
+                        @endphp
+                        @foreach ($kategori as $data)
+                          <tr>
+                            <td>{{$no++}}</td>
+                            <td>{{$data->kategori}}</td>
+                            <td>
+                              <form method="POST" action="{{route('admin.produk.kategori.delete', $data->id)}}" accept-charset="UTF-8">
+                                <input name="_method" type="hidden" value="DELETE">
+                                <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                                <button class="btn btn-danger btn-sm" style="padding: 1px 5px;" onclick="return confirm('Anda yakin akan menghapus data ?');" type="submit"><i class="fa fa-trash"></i></button>
+                              </form>
+                            </td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 <!-- /.modal-content -->
@@ -81,27 +110,34 @@ active
                 <thead>
                 <tr>
                   <th style="width:20px;">No.</th>
-                  <th>Judul</th>
-                  <th>Konten</th>
-                  <th>Posted</th>
+                  <th>Nama</th>
+                  <th>Kategori</th>
+                  <th>Harga</th>
+                  <th>Stok</th>
                   <th style="width:105px;">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Cara Membuat Makan Sehat yang mudah dirumah dan bergizi</td>
-                  <td>Win 95+</td>
-                  <td>12/05/2022</td>
-                  <td>
-                    <form class="" action="" method="post">
-                      <a class="btn btn-sm btn-warning" href="{{route('admin.produk.edit')}}"><i class="fa fa-pencil"></i> </a>
-                      <button class="btn btn-sm btn-danger" type="submit" name="button">
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </form>
-                  </td>
-                </tr>
+                  @php
+                    $no = 1;
+                  @endphp
+                  @foreach ($produks as $data)
+                    <tr>
+                      <td>{{$no++}}</td>
+                      <td>{{$data->nama_produk}}</td>
+                      <td>{{$data->kategoriproduk->kategori}}</td>
+                      <td>{{$data->harga}}</td>
+                      <td>{{$data->stok}}</td>
+                      <td>
+                        <form method="POST" action="{{route('admin.produk.delete', $data->id)}}" accept-charset="UTF-8">
+                          <input name="_method" type="hidden" value="DELETE">
+                          <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                          <a class="btn btn-sm btn-warning" style="padding: 1px 5px;" href="{{route('admin.produk.edit', $data->id)}}"><i class="fa fa-pencil"></i> </a>
+                          <button class="btn btn-danger btn-sm" style="padding: 1px 5px;" onclick="return confirm('Anda yakin akan menghapus data ?');" type="submit"><i class="fa fa-trash"></i></button>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>

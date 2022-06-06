@@ -44,7 +44,8 @@ active
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="" method="post" enctype="multipart/form-data">
+            <form role="form" action="{{route('admin.blog.post')}}" method="post" enctype="multipart/form-data">
+              @csrf
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputFile">Input Gambar</label>

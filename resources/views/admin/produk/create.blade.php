@@ -44,7 +44,8 @@ active
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="" method="post" enctype="multipart/form-data">
+            <form role="form" action="{{route('admin.produk.post')}}" method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputFile">Input Gambar</label>
@@ -62,7 +63,7 @@ active
                         <div class="input-group-addon">
                           Rp.
                         </div>
-                        <input type="text" class="form-control" placeholder="0000000" required>
+                        <input type="text" name="harga" class="form-control" placeholder="0000000" required>
                       </div>
                     </div>
                   </div>
@@ -70,8 +71,9 @@ active
                     <div class="form-group">
                       <label>Kategori Produk</label>
                       <select class="form-control" name="kategoriproduk_id" required>
-                        <option value="1">option 1</option>
-                        <option value="2">option 2</option>
+                        @foreach ($kategori as $data)
+                          <option value="{{$data->id}}">{{$data->kategori}}</option>
+                        @endforeach
                       </select>
                     </div>
                   </div>

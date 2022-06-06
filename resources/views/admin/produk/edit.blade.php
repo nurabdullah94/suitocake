@@ -40,19 +40,21 @@ active
           <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Tambah Data Kue</h3>
+              <h3 class="box-title">Ubah Data Kue</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="" method="post" enctype="multipart/form-data">
+            <form role="form" action="{{route('admin.produk.update', $produk->id)}}" method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              {{ method_field('PATCH') }}
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputFile">Input Gambar</label>
-                  <input type="file" name="gambar" id="exampleInputFile" required>
+                  <input type="file" name="gambar" id="exampleInputFile">
                 </div>
                 <div class="form-group">
                   <label>Nama Produk</label>
-                  <input type="text" name="nama_produk" class="form-control" placeholder="Nama produk" required>
+                  <input type="text" name="nama_produk" class="form-control" placeholder="Nama produk" value="{{$produk->nama_produk}}" required>
                 </div>
                 <div class="row">
                   <div class="col-md-4">
@@ -62,7 +64,7 @@ active
                         <div class="input-group-addon">
                           Rp.
                         </div>
-                        <input type="text" class="form-control" placeholder="0000000" required>
+                        <input type="text" name="harga" class="form-control" placeholder="0000000" value="{{$produk->harga}}" required>
                       </div>
                     </div>
                   </div>
@@ -70,27 +72,28 @@ active
                     <div class="form-group">
                       <label>Kategori Produk</label>
                       <select class="form-control" name="kategoriproduk_id" required>
-                        <option value="1">option 1</option>
-                        <option value="2">option 2</option>
+                        @foreach ($kategori as $data)
+                          <option value="{{$data->id}}" {{ $data->id == $produk->kategoriproduk_id ? 'selected' : '' }}>{{$data->kategori}}</option>
+                        @endforeach
                       </select>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Stok Barang</label>
-                      <input type="text" name="stok" class="form-control" placeholder="0" required>
+                      <input type="text" name="stok" class="form-control" placeholder="0" value="{{$produk->stok}}" required>
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label>Keterangan</label>
-                  <textarea name="keterangan" class="form-control" rows="8" cols="80" placeholder="Masukkan keterangan produk disini..." required></textarea>
+                  <textarea name="keterangan" class="form-control" rows="8" cols="80" placeholder="Masukkan keterangan produk disini..." required>{{$produk->keterangan}}</textarea>
                 </div>
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Tambah</button>
+                <button type="submit" class="btn btn-primary">Ubah</button>
               </div>
             </form>
           </div>

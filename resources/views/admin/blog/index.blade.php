@@ -59,20 +59,25 @@ active
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Cara Membuat Makan Sehat yang mudah dirumah</td>
-                  <td>Win 95+</td>
-                  <td>12/05/2022</td>
-                  <td>
-                    <form class="" action="" method="post">
-                      <a class="btn btn-sm btn-warning" href="{{route('admin.blog.edit')}}"><i class="fa fa-pencil"></i> </a>
-                      <button class="btn btn-sm btn-danger" type="submit" name="button">
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </form>
-                  </td>
-                </tr>
+                  @php
+                    $no = 1;
+                  @endphp
+                  @foreach ($blog as $data)
+                    <tr>
+                      <td>{{$no++}}</td>
+                      <td>{{$data->judul}}</td>
+                      <td>{!!str_limit($data->konten,90)!!}</td>
+                      <td>{{$data->created_at}}</td>
+                      <td>
+                        <form method="POST" action="{{route('admin.blog.delete', $data->id)}}" accept-charset="UTF-8">
+                          <input name="_method" type="hidden" value="DELETE">
+                          <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                          <a class="btn btn-sm btn-warning" style="padding: 1px 5px;" href="{{route('admin.blog.edit', $data->id)}}"><i class="fa fa-pencil"></i> </a>
+                          <button class="btn btn-danger btn-sm" style="padding: 1px 5px;" onclick="return confirm('Anda yakin akan menghapus data ?');" type="submit"><i class="fa fa-trash"></i></button>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
